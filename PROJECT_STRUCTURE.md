@@ -1,28 +1,35 @@
 # 在线工具箱 - 项目结构文档
 
-## 📁 项目目录
+该文档介绍项目目录结构、关键文件和部署说明，适用于已经通过 GitHub 仓库进行托管和 Cloudflare Pages 部署的项目。
 
-```
+## 📁 项目目录结构
+
+```text
 src/
 ├── app/
-│   ├── houtai/                     # 后台管理页面入口
-│   │   └── page.tsx
 │   ├── api/
-│   │   └── houtai/                 # 后台 API 路由
+│   │   └── houtai/
 │   │       └── route.ts
-│   ├── globals.css                 # 全局样式
-│   ├── layout.tsx                  # 根布局与 metadata
-│   └── page.tsx                    # 首页入口
+│   ├── houtai/
+│   │   └── page.tsx
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
 ├── components/
-│   ├── tools/                      # 各类工具组件
+│   ├── admin/
+│   │   └── DatabaseManager.tsx
+│   ├── layout/
+│   │   ├── Footer.tsx
+│   │   ├── Hero.tsx
+│   │   ├── Navbar.tsx
+│   │   └── ToolCard.tsx
+│   ├── tools/
 │   │   ├── ImageProcessor.tsx
 │   │   ├── PDFConverter.tsx
 │   │   ├── PasswordGenerator.tsx
 │   │   ├── QRCodeGenerator.tsx
 │   │   └── TextTools.tsx
-│   ├── admin/                      # 管理后台辅助组件
-│   │   └── DatabaseManager.tsx
-│   └── ui/                         # 可复用 UI 组件
+│   └── ui/
 │       ├── button.tsx
 │       ├── card.tsx
 │       ├── dialog.tsx
@@ -30,113 +37,89 @@ src/
 │       ├── select.tsx
 │       └── textarea.tsx
 ├── data/
-│   ├── db.ts                       # D1 数据库连接与执行
-│   ├── init.sql                    # 默认数据初始化脚本
-│   └── schema.sql                  # 数据库表结构定义
+│   ├── db.ts
+│   ├── init.sql
+│   ├── migrate_session_token.sql
+│   └── schema.sql
 └── lib/
-    └── utils.ts                   # 通用工具函数
+    ├── database-admin.ts
+    ├── mock-database.ts
+    └── utils.ts
 
 scripts/
-└── deploy.ps1                       # PowerShell 部署脚本
+└── deploy.ps1
 
-package.json                         # 项目依赖与脚本
-tsconfig.json                        # TypeScript 配置
-postcss.config.js                    # PostCSS 配置
-tailwind.config.js                   # Tailwind CSS 配置
-wrangler.toml                        # Cloudflare Pages / D1 配置
-README.md                            # 项目说明文档
+package.json
+postcss.config.js
+tailwind.config.js
+tsconfig.json
+wrangler.toml
+next.config.js
+README.md
+PROJECT_STRUCTURE.md
 ```
 
-## 📋 文件说明
+## 📋 关键文件说明
 
 ### 根目录文件
 
-| 文件 | 说明 |
-|------|------|
-| `package.json` | 项目依赖与脚本配置 |
-| `tsconfig.json` | TypeScript 编译设置 |
-| `tailwind.config.js` | Tailwind CSS 配置 |
-| `postcss.config.js` | PostCSS 配置 |
-| `next.config.js` | Next.js 配置 |
-| `wrangler.toml` | Cloudflare Pages 与 D1 绑定配置 |
-| `.gitignore` | Git 忽略规则 |
-| `README.md` | 项目说明与使用文档 |
+- `package.json`：项目依赖、脚本和元数据
+- `tsconfig.json`：TypeScript 编译配置
+- `tailwind.config.js`：Tailwind CSS 配置
+- `postcss.config.js`：PostCSS 配置
+- `next.config.js`：Next.js 项目配置
+- `wrangler.toml`：Cloudflare Pages 与 D1 数据库绑定配置
+- `README.md`：项目说明文档
+- `PROJECT_STRUCTURE.md`：项目结构说明
+- `scripts/deploy.ps1`：PowerShell 部署脚本
 
-### 核心功能文件
+### 应用文件
 
-| 文件路径 | 功能说明 |
-|---------|---------|
-| `src/app/page.tsx` | 工具首页，展示所有功能入口 |
-| `src/app/layout.tsx` | 根布局与全局样式、SEO 配置 |
-| `src/app/houtai/page.tsx` | 后台管理系统页面 |
-| `src/app/api/houtai/route.ts` | 后台 API 路由，处理管理操作 |
-| `src/components/tools/` | 工具功能组件目录 |
-| `src/components/ui/` | 通用 UI 组件目录 |
-| `src/data/init.sql` | 数据库初始化脚本 |
-| `src/data/schema.sql` | 数据库结构定义 |
+- `src/app/page.tsx`：站点首页入口
+- `src/app/layout.tsx`：全局布局与页面元数据
+- `src/app/houtai/page.tsx`：后台管理页面入口
+- `src/app/api/houtai/route.ts`：后台 API 路由处理
+- `src/globals.css`：全局样式
 
-## 🔧 工具列表
+### 组件文件
 
-| 组件 | 功能 |
-|------|------|
-| `QRCodeGenerator` | 二维码生成 |
-| `PasswordGenerator` | 安全密码生成 |
-| `TextTools` | 文本处理工具 |
-| `PDFConverter` | PDF 转换工具 |
-| `ImageProcessor` | 图片处理工具 |
+- `src/components/layout/`：页面布局组件（导航、页脚、卡片、Hero）
+- `src/components/tools/`：工具页面组件
+- `src/components/admin/DatabaseManager.tsx`：管理后台数据库辅助组件
+- `src/components/ui/`：可复用 UI 组件
 
-## 🗄️ 数据库表
+### 数据与库文件
 
-| 表名 | 说明 |
-|------|------|
-| `admins` | 管理员账号表 |
-| `site_content` | 站点内容存储 |
-| `operation_logs` | 操作日志记录 |
-| `settings` | 系统配置 |
-| `user_records` | 用户使用记录 |
-| `favorites` | 收藏内容记录 |
+- `src/data/db.ts`：D1 数据库连接和查询逻辑
+- `src/data/init.sql`：初始数据导入脚本
+- `src/data/schema.sql`：数据库表结构定义
+- `src/data/migrate_session_token.sql`：会话 token 迁移脚本
+- `src/lib/database-admin.ts`：后台数据库管理逻辑
+- `src/lib/mock-database.ts`：模拟数据工具
+- `src/lib/utils.ts`：通用工具函数
 
-## 🚀 快速启动
+## 🔧 部署与 GitHub 仓库
 
-### 安装依赖
+该项目适合通过 GitHub 仓库管理源代码，并使用 Cloudflare Pages 进行自动部署。
 
-```bash
-npm install
-```
+- 推荐工作流：将代码推送到 GitHub 仓库，然后在 Cloudflare Pages 中连接该仓库。
+- 本地构建：`npm run build`
+- 发布部署：`npm run deploy`
 
-### 启动开发服务器
+## 🚀 运行与部署命令
 
-```bash
-npm run dev
-```
+- `npm install`：安装依赖
+- `npm run dev`：本地开发启动
+- `npm run build`：构建项目
+- `npm run start`：生产模式启动
+- `npm run deploy`：部署到 Cloudflare Pages
+- `npm run d1:migrate`：执行 D1 数据库初始化
 
-访问： `http://localhost:3000`
+## 🔐 管理后台入口
 
-### 构建项目
+- 后台页面：`/houtai`
+- API 路由：`/api/houtai`
 
-```bash
-npm run build
-```
+## 🌐 说明
 
-### 部署到 Cloudflare Pages
-
-```bash
-npm run deploy
-```
-
-## 🔐 后台管理
-
-后台入口： `http://localhost:3000/houtai`
-
-后台 API： `/api/houtai`
-
-默认管理员账号（如已初始化数据库）：
-
-- 用户名：`admin`
-- 密码：`admin123`
-
-## 📝 注意
-
-- 后台路径已经从 `/admin` 更新为 `/houtai`
-- API 路径已从 `/api/admin` 更新为 `/api/houtai`
-- 文档内容已同步为当前项目结构和路由配置
+本项目现已支持 GitHub 仓库管理，并且文档内容已同步为实际部署与当前目录结构。

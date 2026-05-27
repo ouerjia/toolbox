@@ -64,8 +64,10 @@ export default function QRCodeGenerator() {
           />
         </div>
         <div className="flex justify-center py-6">
-          <div className="bg-white p-6 rounded-2xl border-2 border-dashed border-slate-200 shadow-inner">
-            <QRCodeCanvas value={value} size={size} level="H" className="rounded-lg" />
+          <div className="w-[320px] h-[320px] bg-white p-6 rounded-2xl border-2 border-dashed border-slate-200 shadow-inner flex items-center justify-center">
+            <div className="relative" style={{ width: size, height: size }}>
+              <QRCodeCanvas value={value} size={size} level="H" className="rounded-lg" />
+            </div>
           </div>
         </div>
         <div className="flex gap-4">

@@ -12,7 +12,8 @@ export default function TextTools() {
   const tools = [
     { id: "uppercase", name: "转大写", icon: Type },
     { id: "lowercase", name: "转小写", icon: Type },
-    { id: "trim", name: "去除空格", icon: AlignLeft },
+    { id: "trim", name: "去除首尾空格", icon: AlignLeft },
+    { id: "removeSpaces", name: "移除所有空格", icon: AlignRight },
     { id: "reverse", name: "反转文本", icon: AlignRight },
     { id: "count", name: "统计字数", icon: Hash },
     { id: "sort", name: "排序", icon: SortAsc },
@@ -30,6 +31,9 @@ export default function TextTools() {
         break;
       case "trim":
         result = text.trim();
+        break;
+      case "removeSpaces":
+        result = text.replace(/\s+/g, "");
         break;
       case "reverse":
         result = text.split("").reverse().join("");
@@ -72,7 +76,7 @@ export default function TextTools() {
         </div>
       </CardHeader>
       <CardContent className="space-y-6 pt-6">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {tools.map((tool) => (
             <Button
               key={tool.id}
