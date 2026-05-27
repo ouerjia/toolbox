@@ -235,6 +235,16 @@ export async function onRequest(context) {
         }
       }
 
+      let recentLogs = [];
+      if (env.DB) {
+        try {
+          const logs = await env.DB.prepare("SELECT * FROM operation_logs ORDER BY created_at DESC LIMIT 10").all();
+          recentLogs = logs.results || [];
+        } catch (dbError) {
+          console.error("Database error:", dbError);
+        }
+      }
+
       return new Response(JSON.stringify({
         totalUsage,
         totalFavorites,
@@ -246,6 +256,7 @@ export async function onRequest(context) {
           { tool_name: "PDF转换", total: 1234 },
           { tool_name: "图片处理", total: 987 },
         ],
+        recentLogs,
       }), {
         headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*' },
       });
