@@ -3,7 +3,3 @@ compatibility_date = "2024-01-01"
 
 [vars]
 NODE_ENV = "production"
-
-# Cloudflare Pages Functions 配置
-[site]
-bucket = "./out"
