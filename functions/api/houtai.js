@@ -6,7 +6,7 @@ const crypto = require('crypto');
 const DEFAULT_ADMIN = {
   id: 1,
   username: "admin",
-  password_hash: "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+  password_hash: "240bd518fabd2724d6b6f04ced1da597448d7c831c8c8fa622609f74c720a9",
   email: "admin@example.com",
   role: "superadmin",
 };
