@@ -1,7 +1,7 @@
 // Cloudflare Pages Function - 后台管理 API
 // 路径: /api/houtai/*
 
-import crypto from "crypto";
+const crypto = require('crypto');
 
 // 默认管理员数据（用于本地开发/无数据库环境）
 const DEFAULT_ADMIN = {
@@ -126,7 +126,7 @@ async function deleteSession(token, env) {
   delete memorySessions[token];
 }
 
-export async function onRequestGet(context) {
+async function onRequestGet(context) {
   const { request, env } = context;
   const url = new URL(request.url);
   const action = url.searchParams.get("action");
@@ -192,7 +192,7 @@ export async function onRequestGet(context) {
   });
 }
 
-export async function onRequestPost(context) {
+async function onRequestPost(context) {
   const { request, env } = context;
 
   try {
@@ -355,3 +355,5 @@ export async function onRequestPost(context) {
     );
   }
 }
+
+module.exports = { onRequestGet, onRequestPost };
